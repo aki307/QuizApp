@@ -1,14 +1,14 @@
 const startQuizButton = document.getElementById('start-quiz-button');
-let messageSubject = document.getElementById('message-subject');
-let messageContent = document.getElementById('message-content');
-let quizContentWrapper = document.getElementById('quiz-content-wrapper');
-let buttonWrapper = document.getElementById('button-wrapper');
+const messageSubject = document.getElementById('message-subject');
+const messageContent = document.getElementById('message-content');
+const quizContentWrapper = document.getElementById('quiz-content-wrapper');
+const buttonWrapper = document.getElementById('button-wrapper');
 let correctNumber = 0;
 let quizNumber = 0;
 
 
 
-startQuizButton.addEventListener('click', function (event) {
+startQuizButton.addEventListener('click', function(event) {
     messageSubject.textContent = "取得中";
     messageContent.textContent = "少々お待ちください";
     fetch('https://opentdb.com/api.php?amount=10&type=multiple')
@@ -37,12 +37,6 @@ function shuffleArray(array) {
     return array;
 }
 
-// クリックイベントのハンドラ関数
-function handleClick(event) {
-    // クリックされた要素のIDを表示する
-    console.log(event.target.id);
-}
-
 function newQuestion(quizNumber, fetchText) {
     if (quizNumber < 10) {
         console.log('問題番号は' + quizNumber);
@@ -68,7 +62,8 @@ function newQuestion(quizNumber, fetchText) {
         buttonWrapper.innerHTML = displayButtonWrapperHTML;
         const buttonClick = document.querySelectorAll('[id*="answer-button"]');
         buttonClickEvent(buttonClick, correctAnswer, fetchText);
-    } else {
+    }
+    else {
         console.log('正答数は' + correctNumber);
         displayQuizContentHTML = ''
         displayButtonWrapperHTML = `
@@ -77,7 +72,7 @@ function newQuestion(quizNumber, fetchText) {
         quizContentWrapper.innerHTML = displayQuizContentHTML;
         buttonWrapper.innerHTML = displayButtonWrapperHTML;
         const goToHomeButton = document.getElementById('go-to-home-button');
-        goToHomeButton.addEventListener('click', function (event) {
+        goToHomeButton.addEventListener('click', function(event) {
             displayQuizContentHTML = ''
             displayButtonWrapperHTML = ''
             quizContentWrapper.innerHTML = displayQuizContentHTML;
@@ -91,19 +86,21 @@ function newQuestion(quizNumber, fetchText) {
 
     }
 }
+
 function buttonClickEvent(buttonClick, correctAnswer, fetchText) {
     quizNumber += 1;
     messageSubject.textContent = '問題' + quizNumber;
-    buttonClick.forEach(function (button) {
-        button.addEventListener('click', function (event) {
+    buttonClick.forEach(function(button) {
+        button.addEventListener('click', function(event) {
             const buttonClickValue = event.target.value;
             console.log(buttonClickValue);
             if (buttonClickValue === correctAnswer) {
                 console.log('正解です');
-                correctNumber += 1;
+                correctNumber++;
                 console.log('正解数は' + correctNumber);
                 newQuestion(quizNumber, fetchText);
-            } else {
+            }
+            else {
                 console.log('不正解です');
                 newQuestion(quizNumber, fetchText);
             }
